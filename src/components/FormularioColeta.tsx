@@ -402,7 +402,13 @@ export default function FormularioColeta() {
             .fc-responsive { padding: 1rem 0.75rem !important; }
             .fc-responsive h1 { font-size: 1.1rem !important; }
             .fc-responsive h2 { font-size: 0.9rem !important; }
-            /* Empilhar sessões e colunas */
+            /* Empilhar TODAS as sessões lado a lado (styles.row) */
+            .fc-responsive > div[style*="display: grid"][style*="grid-template-columns: 1fr 1fr"] {
+              display: flex !important;
+              flex-direction: column !important;
+              gap: 1rem !important;
+            }
+            /* Empilhar colunas internas */
             .fc-responsive div[style*="grid-template-columns: 1fr 1fr"],
             .fc-responsive div[style*="grid-template-columns: 1fr 1fr 1fr"],
             .fc-responsive div[style*="repeat(4, 1fr)"] {
