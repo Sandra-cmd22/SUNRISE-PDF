@@ -442,6 +442,21 @@ export default function QuestionarioPais() {
             .qp-responsive .navButton { padding: 0.6rem 1.1rem !important; font-size: 0.85rem !important; }
           }
 
+          /* Ajuste para checkboxes em telas pequenas */
+          @media (max-width: 645px) {
+            .qp-responsive label[style*="checkboxLabelInline"],
+            .qp-responsive label[style*="checkboxLabelBlock"] {
+              display: flex !important;
+              align-items: center !important;
+              gap: 0.5rem !important;
+            }
+            .qp-responsive input[type="checkbox"] {
+              flex-shrink: 0 !important;
+              margin: 0 !important;
+              vertical-align: middle !important;
+            }
+          }
+
           /* Mobile */
           @media (max-width: 640px) {
             .qp-responsive { padding: 1rem 0.75rem !important; }
