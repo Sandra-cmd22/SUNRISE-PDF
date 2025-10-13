@@ -399,6 +399,13 @@ export default function FormularioColeta() {
             .fc-responsive section { padding: 0.85rem !important; }
           }
 
+          /* Quebrar 3 colunas para 2 colunas em telas médias */
+          @media (max-width: 1052px) {
+            .fc-responsive section > div[style*="grid-template-columns: 1fr 1fr 1fr"] {
+              grid-template-columns: 1fr 1fr !important;
+            }
+          }
+
           /* Tablet */
           @media (max-width: 1024px) {
             .fc-responsive { padding: 1.25rem 1rem !important; }
