@@ -402,21 +402,24 @@ export default function FormularioColeta() {
             .fc-responsive { padding: 1rem 0.75rem !important; }
             .fc-responsive h1 { font-size: 1.1rem !important; }
             .fc-responsive h2 { font-size: 0.9rem !important; }
-            /* Empilhar TODAS as sessões lado a lado (styles.row) */
-            .fc-responsive > div[style*="display: grid"][style*="grid-template-columns: 1fr 1fr"] {
+            /* Empilhar TODAS as seções lado a lado - força grid a virar coluna */
+            .fc-responsive > div {
               display: flex !important;
               flex-direction: column !important;
               gap: 1rem !important;
             }
-            /* Empilhar colunas internas */
-            .fc-responsive div[style*="grid-template-columns: 1fr 1fr"],
-            .fc-responsive div[style*="grid-template-columns: 1fr 1fr 1fr"],
-            .fc-responsive div[style*="repeat(4, 1fr)"] {
+            /* Empilhar colunas internas (threeColumns, twoColumns, inlineRow) */
+            .fc-responsive section > div[style*="grid-template-columns"],
+            .fc-responsive section > div[style*="repeat("] {
               display: flex !important;
               flex-direction: column !important;
               gap: 0.6rem !important;
             }
-            .fc-responsive .submitContainer { flex-direction: column !important; }
+            .fc-responsive .submitContainer { 
+              display: flex !important;
+              flex-direction: column !important; 
+              gap: 1rem !important;
+            }
             .fc-responsive .submitButton, .fc-responsive .spreadsheetButton { width: 100% !important; }
             .fc-responsive label { font-size: 0.78rem !important; }
             .fc-responsive input,
