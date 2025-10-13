@@ -1,0 +1,180 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: #252525;
+  --card: #ffffff;
+  --card-foreground: #252525;
+  --popover: #ffffff;
+  --popover-foreground: #252525;
+  --primary: #030213;
+  --primary-foreground: #ffffff;
+  --secondary: #f2f2f5;
+  --secondary-foreground: #030213;
+  --muted: #ececf0;
+  --muted-foreground: #717182;
+  --accent: #e9ebef;
+  --accent-foreground: #030213;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: transparent;
+  --input-background: #f3f3f5;
+  --switch-background: #cbced4;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #b5b5b5;
+  --chart-1: #e67e22;
+  --chart-2: #3498db;
+  --chart-3: #34495e;
+  --chart-4: #f1c40f;
+  --chart-5: #e74c3c;
+  --radius: 0.625rem;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #252525;
+  --sidebar-primary: #030213;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-foreground: #353535;
+  --sidebar-border: #ebebeb;
+  --sidebar-ring: #b5b5b5;
+}
+
+.dark {
+  --background: #252525;
+  --foreground: #fafafa;
+  --card: #252525;
+  --card-foreground: #fafafa;
+  --popover: #252525;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #353535;
+  --secondary: #454545;
+  --secondary-foreground: #fafafa;
+  --muted: #454545;
+  --muted-foreground: #b5b5b5;
+  --accent: #454545;
+  --accent-foreground: #fafafa;
+  --destructive: #7c2d2d;
+  --destructive-foreground: #e89393;
+  --border: #454545;
+  --input: #454545;
+  --ring: #707070;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: #7c3aed;
+  --chart-2: #10b981;
+  --chart-3: #f59e0b;
+  --chart-4: #ec4899;
+  --chart-5: #ef4444;
+  --sidebar: #353535;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #7c3aed;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #454545;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #454545;
+  --sidebar-ring: #707070;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Importar fonte Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Aplicar Poppins globalmente */
+body, input, textarea, button, select {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Estilos para inputs e textareas */
+input:focus, textarea:focus {
+  border-color: #613789;
+  box-shadow: 0 0 0 3px rgba(97, 55, 137, 0.1);
+}
+
+/* Animação no hover do botão submit */
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(97, 55, 137, 0.3);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Responsividade adicional */
+@media (max-width: 768px) {
+  :root {
+    --font-size: 14px;
+  }
+}
