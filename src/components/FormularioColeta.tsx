@@ -386,6 +386,19 @@ export default function FormularioColeta() {
     <form ref={formRef} onSubmit={handleSubmit} style={styles.form} className="fc-responsive">
       <style>
         {`
+          /* Telas médias - ajustar inputs das seções 2/3 */
+          @media (max-width: 1182px) {
+            .fc-responsive input,
+            .fc-responsive textarea { 
+              font-size: 0.8rem !important; 
+              padding: 0.4rem 0.6rem !important;
+              min-height: 32px !important;
+            }
+            .fc-responsive label { font-size: 0.75rem !important; }
+            .fc-responsive h2 { font-size: 0.9rem !important; }
+            .fc-responsive section { padding: 0.85rem !important; }
+          }
+
           /* Tablet */
           @media (max-width: 1024px) {
             .fc-responsive { padding: 1.25rem 1rem !important; }
