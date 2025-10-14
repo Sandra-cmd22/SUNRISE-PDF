@@ -915,22 +915,24 @@ export default function FormularioColeta() {
               <label style={styles.label}>Tentativa Direita 1 (kg):</label>
               <input
                 type="number"
-                step="0.1"
+                step="0.5"
                 name="tentativaDireita1Din"
                 value={formData.tentativaDireita1Din}
                 onChange={handleChange}
                 style={styles.input}
+                placeholder="0.0"
               />
             </div>
             <div style={styles.inputGroup}>
               <label style={styles.label}>Tentativa Esquerda 1 (kg):</label>
               <input
                 type="number"
-                step="0.1"
+                step="0.5"
                 name="tentativaEsquerda1Din"
                 value={formData.tentativaEsquerda1Din}
                 onChange={handleChange}
                 style={styles.input}
+                placeholder="0.0"
               />
             </div>
           </div>
@@ -939,22 +941,24 @@ export default function FormularioColeta() {
               <label style={styles.label}>Tentativa Direita 2 (kg):</label>
               <input
                 type="number"
-                step="0.1"
+                step="0.5"
                 name="tentativaDireita2Din"
                 value={formData.tentativaDireita2Din}
                 onChange={handleChange}
                 style={styles.input}
+                placeholder="0.0"
               />
             </div>
             <div style={styles.inputGroup}>
               <label style={styles.label}>Tentativa Esquerda 2 (kg):</label>
               <input
                 type="number"
-                step="0.1"
+                step="0.5"
                 name="tentativaEsquerda2Din"
                 value={formData.tentativaEsquerda2Din}
                 onChange={handleChange}
                 style={styles.input}
+                placeholder="0.0"
               />
             </div>
           </div>
@@ -1149,13 +1153,14 @@ export default function FormularioColeta() {
           <div style={styles.inputGroup}>
             <label style={styles.label}>IC:</label>
             <input
-              type="text"
+              type="number"
+              step="0.01"
               name="icGo"
               value={formData.icGo}
               onChange={handleChange}
-              style={{ ...styles.input, maxWidth: '80px' }}
-              maxLength={2}
-              placeholder="00"
+              style={{ ...styles.input, maxWidth: '100px' }}
+              placeholder="0.00"
+              min="0"
             />
           </div>
           <div style={styles.inputGroup}>
