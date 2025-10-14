@@ -10,7 +10,8 @@ export default function Header({ currentForm, onFormChange }: HeaderProps) {
   const forms = [
     { id: 'coleta', label: 'Formulário de Coleta' },
     { id: 'monitoramento', label: 'Monitoramento de Acelerômetro' },
-    { id: 'questionario', label: 'Questionário Pais/Responsável' }
+    { id: 'questionario', label: 'Questionário Pais/Responsável' },
+    { id: 'listaColetas', label: 'Visualizar Coletas' }
   ];
 
   return (

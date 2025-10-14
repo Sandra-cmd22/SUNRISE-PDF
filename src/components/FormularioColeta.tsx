@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { salvarColeta, DadosColeta } from '../services/coletaService';
 
 export default function FormularioColeta() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -110,6 +111,33 @@ export default function FormularioColeta() {
     } catch (error) {
       console.error('Erro ao exportar dados:', error);
       alert('Erro ao exportar dados. Por favor, tente novamente.');
+    }
+  };
+
+  const handleSalvarSupabase = async () => {
+    try {
+      // Mostrar mensagem de carregamento
+      const loadingMsg = document.createElement('div');
+      loadingMsg.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: white; padding: 2rem; border-radius: 8px; z-index: 9999; font-family: Poppins, sans-serif;';
+      loadingMsg.textContent = 'Salvando dados no Supabase...';
+      document.body.appendChild(loadingMsg);
+
+      // Salvar no Supabase
+      const resultado = await salvarColeta(formData as DadosColeta);
+
+      // Remover mensagem de loading
+      document.body.removeChild(loadingMsg);
+
+      if (resultado.sucesso) {
+        alert('✅ Dados salvos no Supabase com sucesso!');
+        console.log('Dados salvos:', resultado.dados);
+      } else {
+        alert(`❌ Erro ao salvar dados: ${resultado.erro}\n\nVerifique se as variáveis de ambiente VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY estão configuradas.`);
+        console.error('Erro:', resultado.erro);
+      }
+    } catch (error) {
+      console.error('Erro ao salvar no Supabase:', error);
+      alert('❌ Erro ao salvar dados. Por favor, verifique a configuração do Supabase.');
     }
   };
 
@@ -1163,6 +1191,13 @@ export default function FormularioColeta() {
         </button>
         <button 
           type="button" 
+          onClick={handleSalvarSupabase}
+          style={styles.supabaseButton}
+        >
+          Salvar no Supabase
+        </button>
+        <button 
+          type="button" 
           onClick={handleEnviarPlanilha}
           style={styles.spreadsheetButton}
         >
@@ -1294,6 +1329,19 @@ const styles: { [key: string]: React.CSSProperties } = {
   submitButton: {
     padding: '0.875rem 2.5rem',
     background: 'linear-gradient(135deg, #613789, #FD9630)',
+    color: '#ffffff',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '1rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    fontFamily: "'Poppins', sans-serif",
+    minHeight: '44px'
+  },
+  supabaseButton: {
+    padding: '0.875rem 2.5rem',
+    background: 'linear-gradient(135deg, #3ECF8E, #2E7D5E)',
     color: '#ffffff',
     border: 'none',
     borderRadius: '8px',

@@ -3,9 +3,21 @@ import Header from './components/Header';
 import FormularioColeta from './components/FormularioColeta';
 import MonitoramentoAcelerometro from './components/MonitoramentoAcelerometro';
 import QuestionarioPais from './components/QuestionarioPais';
+import ListaColetas from './components/ListaColetas';
+import DetalhesColeta from './components/DetalhesColeta';
 
 export default function App() {
   const [currentForm, setCurrentForm] = useState('coleta');
+  const [coletaSelecionadaId, setColetaSelecionadaId] = useState<string | null>(null);
+
+  const handleColetaSelecionada = (coletaId: string) => {
+    setColetaSelecionadaId(coletaId);
+  };
+
+  const handleVoltarParaLista = () => {
+    setColetaSelecionadaId(null);
+    setCurrentForm('listaColetas'); // Força recarregar a lista
+  };
 
   return (
     <div style={styles.app}>
@@ -15,6 +27,16 @@ export default function App() {
         {currentForm === 'coleta' && <FormularioColeta />}
         {currentForm === 'monitoramento' && <MonitoramentoAcelerometro />}
         {currentForm === 'questionario' && <QuestionarioPais />}
+        {currentForm === 'listaColetas' && !coletaSelecionadaId && (
+          <ListaColetas onColetaSelecionada={handleColetaSelecionada} />
+        )}
+        {currentForm === 'listaColetas' && coletaSelecionadaId && (
+          <DetalhesColeta 
+            coletaId={coletaSelecionadaId} 
+            onVoltar={handleVoltarParaLista}
+            onColetaDeletada={handleVoltarParaLista}
+          />
+        )}
       </main>
     </div>
   );
