@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import FormularioColeta from './components/FormularioColeta';
 import MonitoramentoAcelerometro from './components/MonitoramentoAcelerometro';
 import QuestionarioPais from './components/QuestionarioPais';
 import ListaColetas from './components/ListaColetas';
 import DetalhesColeta from './components/DetalhesColeta';
+import PasswordScreen from './components/PasswordScreen';
 
 export default function App() {
   const [currentForm, setCurrentForm] = useState('coleta');
   const [coletaSelecionadaId, setColetaSelecionadaId] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Verificar se já está autenticado ao carregar
+  useEffect(() => {
+    const authenticated = localStorage.getItem('sunrise_authenticated');
+    if (authenticated === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const handleColetaSelecionada = (coletaId: string) => {
     setColetaSelecionadaId(coletaId);
@@ -18,6 +28,15 @@ export default function App() {
     setColetaSelecionadaId(null);
     setCurrentForm('listaColetas'); // Força recarregar a lista
   };
+
+  const handleAuthenticated = () => {
+    setIsAuthenticated(true);
+  };
+
+  // Se não estiver autenticado, mostra tela de senha
+  if (!isAuthenticated) {
+    return <PasswordScreen onAuthenticated={handleAuthenticated} />;
+  }
 
   return (
     <div style={styles.app}>
