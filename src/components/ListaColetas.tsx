@@ -19,6 +19,7 @@ export default function ListaColetas({ onColetaSelecionada }: ListaColetasProps)
   const [coletas, setColetas] = useState<Coleta[]>([]);
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState('');
+  const [termoBusca, setTermoBusca] = useState('');
 
   const carregarColetas = async () => {
     setCarregando(true);
@@ -66,6 +67,22 @@ export default function ListaColetas({ onColetaSelecionada }: ListaColetasProps)
     carregarColetas();
   }, []);
 
+  // Filtrar coletas com base no termo de busca
+  const coletasFiltradas = coletas.filter((coleta) => {
+    if (!termoBusca) return true;
+    
+    const termo = termoBusca.toLowerCase();
+    const idCreche = (coleta.idCreche || '').toLowerCase();
+    const idCrianca = (coleta.idCrianca || '').toLowerCase();
+    const avaliador = (coleta.avaliador || '').toLowerCase();
+    
+    return (
+      idCreche.includes(termo) ||
+      idCrianca.includes(termo) ||
+      avaliador.includes(termo)
+    );
+  });
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -109,11 +126,50 @@ export default function ListaColetas({ onColetaSelecionada }: ListaColetasProps)
       )}
 
       {!erro && coletas.length > 0 && (
-        <div style={styles.tableContainer}>
-          <p style={styles.clickHint}>
-            💡 Clique em uma linha para visualizar e editar a coleta
-          </p>
-          <table style={styles.table}>
+        <>
+          {/* Campo de Busca */}
+          <div style={styles.searchContainer}>
+            <input
+              type="text"
+              placeholder="🔍 Buscar por ID da creche, ID da criança ou avaliador..."
+              value={termoBusca}
+              onChange={(e) => setTermoBusca(e.target.value)}
+              style={styles.searchInput}
+            />
+            {termoBusca && (
+              <button
+                onClick={() => setTermoBusca('')}
+                style={styles.clearButton}
+                title="Limpar busca"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Resultado da busca */}
+          {termoBusca && (
+            <p style={styles.searchResult}>
+              {coletasFiltradas.length === 0 ? (
+                <span style={styles.noResults}>
+                  ❌ Nenhum resultado encontrado para "{termoBusca}"
+                </span>
+              ) : (
+                <span style={styles.hasResults}>
+                  ✅ {coletasFiltradas.length} {coletasFiltradas.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}
+                </span>
+              )}
+            </p>
+          )}
+
+          <div style={styles.tableContainer}>
+            {coletasFiltradas.length > 0 && (
+              <p style={styles.clickHint}>
+                💡 Clique em uma linha para visualizar e editar a coleta
+              </p>
+            )}
+            {coletasFiltradas.length > 0 ? (
+              <table style={styles.table}>
             <thead>
               <tr style={styles.tableHeaderRow}>
                 <th style={styles.tableHeader}>ID Criança</th>
@@ -124,7 +180,7 @@ export default function ListaColetas({ onColetaSelecionada }: ListaColetasProps)
               </tr>
             </thead>
             <tbody>
-              {coletas.map((coleta) => (
+              {coletasFiltradas.map((coleta) => (
                 <tr 
                   key={coleta.id} 
                   style={styles.tableRow}
@@ -143,10 +199,23 @@ export default function ListaColetas({ onColetaSelecionada }: ListaColetasProps)
               ))}
             </tbody>
           </table>
+            ) : (
+              <div style={styles.emptyState}>
+                <p style={styles.emptyText}>Nenhum resultado encontrado</p>
+                <p style={styles.emptyHint}>
+                  Tente buscar por outro termo
+                </p>
+              </div>
+            )}
           <p style={styles.totalText}>
-            Total: {coletas.length} {coletas.length === 1 ? 'coleta' : 'coletas'}
+            {termoBusca ? (
+              <>Mostrando {coletasFiltradas.length} de {coletas.length} {coletas.length === 1 ? 'coleta' : 'coletas'}</>
+            ) : (
+              <>Total: {coletas.length} {coletas.length === 1 ? 'coleta' : 'coletas'}</>
+            )}
           </p>
         </div>
+        </>
       )}
     </div>
   );
@@ -242,6 +311,52 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: '0.95rem',
     color: '#999',
     margin: 0
+  },
+  searchContainer: {
+    position: 'relative',
+    marginBottom: '1.5rem'
+  },
+  searchInput: {
+    width: '100%',
+    padding: '0.875rem 3rem 0.875rem 1rem',
+    fontSize: '0.95rem',
+    border: '2px solid #d0d0d0',
+    borderRadius: '8px',
+    fontFamily: "'Poppins', sans-serif",
+    outline: 'none',
+    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+    boxSizing: 'border-box'
+  },
+  clearButton: {
+    position: 'absolute',
+    right: '0.75rem',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: '#dc3545',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '50%',
+    width: '28px',
+    height: '28px',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'background 0.3s ease',
+    fontFamily: "'Poppins', sans-serif",
+    fontWeight: 'bold'
+  },
+  searchResult: {
+    margin: '0 0 1rem 0',
+    fontSize: '0.9rem',
+    fontWeight: '500'
+  },
+  noResults: {
+    color: '#dc3545'
+  },
+  hasResults: {
+    color: '#28a745'
   },
   tableContainer: {
     overflowX: 'auto'
